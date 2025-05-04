@@ -31,7 +31,7 @@ namespace vMenuClient.menus
         private void CreateMenu()
         {
             // Menu
-            menu = new Menu(GetSafePlayerName(Game.Player.Name), "Personal Vehicle Options");
+            menu = new Menu(GetSafePlayerName(" "), "Personal Vehicle Options");
 
             // menu items
             var setVehice = new MenuItem("Set Vehicle", "Sets your current vehicle as your personal vehicle. If you already have a personal vehicle set then this will override your selection.") { Label = "Current Vehicle: None" };

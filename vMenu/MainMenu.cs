@@ -482,11 +482,11 @@ namespace vMenuClient
                 return;
             }
             // Create the main menu.
-            // fuck menu headers, no text needed
-            Menu = new Menu("", "Main Menu");
-            PlayerSubmenu = new Menu("", "Player Related Options");
-            VehicleSubmenu = new Menu("", "Vehicle Related Options");
-            WorldSubmenu = new Menu("", "World Options");
+            // need at least a space or this shit doesn't spawn
+            Menu = new Menu(" ", "Main Menu");
+            PlayerSubmenu = new Menu(" ", "Player Related Options");
+            VehicleSubmenu = new Menu(" ", "Vehicle Related Options");
+            WorldSubmenu = new Menu(" ", "World Options");
 
             // Add the main menu to the menu pool.
             MenuController.AddMenu(Menu);

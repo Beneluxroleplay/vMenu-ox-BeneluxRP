@@ -85,19 +85,19 @@ namespace vMenuClient.menus
             }
 
             // Create the menu.
-            menu = new Menu(Game.Player.Name, "Misc Settings");
-            teleportOptionsMenu = new Menu(Game.Player.Name, "Teleport Options");
-            developerToolsMenu = new Menu(Game.Player.Name, "Development Tools");
-            entitySpawnerMenu = new Menu(Game.Player.Name, "Entity Spawner");
+            menu = new Menu(" ", "Misc Settings");
+            teleportOptionsMenu = new Menu(" ", "Teleport Options");
+            developerToolsMenu = new Menu(" ", "Development Tools");
+            entitySpawnerMenu = new Menu(" ", "Entity Spawner");
 
             // teleport menu
-            var teleportMenu = new Menu(Game.Player.Name, "Teleport Locations");
+            var teleportMenu = new Menu(" ", "Teleport Locations");
             var teleportMenuBtn = new MenuItem("Teleport Locations", "Teleport to pre-configured locations, added by the server owner.");
             MenuController.AddSubmenu(menu, teleportMenu);
             MenuController.BindMenuItem(menu, teleportMenu, teleportMenuBtn);
 
             // keybind settings menu
-            var keybindMenu = new Menu(Game.Player.Name, "Keybind Settings");
+            var keybindMenu = new Menu(" ", "Keybind Settings");
             var keybindMenuBtn = new MenuItem("Keybind Settings", "Enable or disable keybinds for some options.");
             MenuController.AddSubmenu(menu, keybindMenu);
             MenuController.BindMenuItem(menu, keybindMenu, keybindMenuBtn);
@@ -150,7 +150,7 @@ namespace vMenuClient.menus
             var cancelEntity = new MenuItem("Cancel", "Deletes current entity and cancels its placement");
             var confirmAndDuplicate = new MenuItem("Confirm Entity Position And Duplicate", "Stops placing entity and sets it at it current location and creates new one to place.");
 
-            var connectionSubmenu = new Menu(Game.Player.Name, "Connection Options");
+            var connectionSubmenu = new Menu(" ", "Connection Options");
             var connectionSubmenuBtn = new MenuItem("Connection Options", "Server connection/game quit options.");
 
             var quitSession = new MenuItem("Quit Session", "Leaves you connected to the server, but quits the network session. ~r~Can not be used when you are the host.");

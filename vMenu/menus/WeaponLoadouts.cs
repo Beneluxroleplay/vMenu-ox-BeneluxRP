@@ -82,7 +82,7 @@ namespace vMenuClient.menus
         /// </summary>
         public void CreateMenu()
         {
-            menu = new Menu(Game.Player.Name, "weapon loadouts management");
+            menu = new Menu(" ", "weapon loadouts management");
 
             MenuController.AddSubmenu(menu, SavedLoadoutsMenu);
             MenuController.AddSubmenu(SavedLoadoutsMenu, ManageLoadoutMenu);

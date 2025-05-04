@@ -33,7 +33,7 @@ namespace vMenuClient.menus
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new Menu(Game.Player.Name, "Online Players")
+            menu = new Menu(" ", "Online Players")
             {
                 CounterPreText = "Players: "
             };
