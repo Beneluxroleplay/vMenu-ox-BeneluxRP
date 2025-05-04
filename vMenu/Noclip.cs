@@ -50,6 +50,9 @@ namespace vMenuClient
                 ["enabled"] = NoclipActive
             };
             TriggerEvent("vMenu:Integrations:Action", "noclip", actionData);
+            
+            // trigger gang tags visibility toggle when noclip state changes
+            TriggerServerEvent("bxrp_gangtags:server:noclip");
 
             if (!active)
             {
