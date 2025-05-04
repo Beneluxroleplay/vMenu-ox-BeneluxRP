@@ -837,15 +837,6 @@ namespace vMenuClient
                 AddMenu(Menu, menu, button);
             }
 
-            // Add About Menu.
-            AboutMenu = new About();
-            var sub = AboutMenu.GetMenu();
-            var btn = new MenuItem("About vMenu", "Information about vMenu.")
-            {
-                Label = "→→→"
-            };
-            AddMenu(Menu, sub, btn);
-
             // Refresh everything.
             MenuController.Menus.ForEach((m) => m.RefreshIndex());
 
