@@ -331,6 +331,7 @@ namespace vMenuShared
             WPStunRod,
             // Custom Weapons
             WPDeagle,
+            WPFM1M16A4,
             #endregion
 
             // Weapon Loadouts Menu

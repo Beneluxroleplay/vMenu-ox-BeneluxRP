@@ -80,6 +80,8 @@ namespace vMenuClient.data
         // list of custom weapons we want to add directly to categories
         static ValidWeapons()
         {
+            // Register custom weapon label
+            AddTextEntry("WEAPON_FM1_M16A4", "M16A4");
             // add desert eagle to custom weapons
             var deagleHash = (uint)GetHashKey("weapon_deagle");
             CustomWeapons["weapon_deagle"] = new ValidWeapon
@@ -90,6 +92,18 @@ namespace vMenuClient.data
                 Perm = Permission.WPDeagle,
                 // desert eagle is a pistol
                 Group = 416676503 // pistol/handgun category value
+            };
+            
+            // add m16a4 assault rifle to custom weapons
+            var m16a4Hash = (uint)GetHashKey("weapon_fm1_m16a4");
+            CustomWeapons["weapon_fm1_m16a4"] = new ValidWeapon
+            {
+                Hash = m16a4Hash,
+                Name = "M16A4",
+                SpawnName = "weapon_fm1_m16a4", 
+                Perm = Permission.WPFM1M16A4,
+                // m16a4 is an assault rifle
+                Group = 970310034 // assault rifle category value
             };
         }
 
@@ -564,12 +578,35 @@ namespace vMenuClient.data
             ["weapon_hackingdevice"] = Permission.WPHackingDevice,
             // MP2024_01 DLC (V 3258)
             ["weapon_stunrod"] = Permission.WPStunRod,
+            // Custom Weapons
+            ["weapon_fm1_m16a4"] = Permission.WPFM1M16A4,
         };
         #endregion
 
         #region weapon component names
         private static readonly Dictionary<string, string> weaponComponentNames = new()
         {
+            // M16A4 Components
+            ["COMPONENT_FMLITECLIP_01"] = GetLabelText("WCT_CLIP1"),
+            ["COMPONENT_FMLITECLIP_02"] = GetLabelText("WCT_CLIP2"),
+            ["COMPONENT_FMLITECLIP_03"] = "Extended Mag",
+            ["COMPONENT_FMLITECLIP_04"] = "Drum Magazine",
+            ["COMPONENT_FMLITECLIP_05"] = "Box Magazine",
+            ["COMPONENT_FMLITECLIP_06"] = "Large Drum Mag",
+            ["COMPONENT_FMLITECLIP_07"] = "Special Mag",
+            ["COMPONENT_FMLITESCOPE_01"] = GetLabelText("WCT_SCOPE"),
+            ["COMPONENT_FMLITESCOPE_02"] = GetLabelText("WCT_SCOPE_LRG"),
+            ["COMPONENT_FMLITESCOPE_06"] = "Holographic Sight",
+            ["COMPONENT_FMLITESCOPE_07"] = "Red Dot Sight",
+            ["COMPONENT_FMLITESCOPE_08"] = "Thermal Scope",
+            ["COMPONENT_FMLITESCOPE_09"] = "ACOG Scope",
+            ["COMPONENT_FMLITESCOPE_10"] = "Combat Scope",
+            ["COMPONENT_FMLITESCOPE_11"] = "Advanced Scope",
+            ["COMPONENT_FMLITESCOPE_12"] = "Night Vision Scope",
+            ["COMPONENT_FMLITESUPP_01"] = GetLabelText("WCT_SUPP"),
+            ["COMPONENT_FMLITESUPP_02"] = "Tactical Suppressor",
+            
+            // Desert Eagle Components
             ["COMPONENT_DEAGLE_CLIP_01"] = GetLabelText("WCT_CLIP1"),
             ["COMPONENT_ADVANCEDRIFLE_CLIP_01"] = GetLabelText("WCT_CLIP1"),
             ["COMPONENT_ADVANCEDRIFLE_CLIP_02"] = GetLabelText("WCT_CLIP2"),
