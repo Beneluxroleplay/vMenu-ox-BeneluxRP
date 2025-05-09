@@ -332,6 +332,7 @@ namespace vMenuShared
             // Custom Weapons
             WPDeagle,
             WPFM1M16A4,
+            WPMPX,
             #endregion
 
             // Weapon Loadouts Menu

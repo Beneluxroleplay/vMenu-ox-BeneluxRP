@@ -105,6 +105,18 @@ namespace vMenuClient.data
                 // m16a4 is an assault rifle
                 Group = 970310034 // assault rifle category value
             };
+            
+            // add MPX SMG to custom weapons
+            var mpxHash = (uint)GetHashKey("weapon_mpx");
+            CustomWeapons["weapon_mpx"] = new ValidWeapon
+            {
+                Hash = mpxHash,
+                Name = "MPX",
+                SpawnName = "weapon_mpx",
+                Perm = Permission.WPMPX,
+                // mpx is an SMG
+                Group = 3337201093 // SMG category value
+            };
         }
 
         private static Dictionary<string, string> _components = new();
@@ -457,7 +469,8 @@ namespace vMenuClient.data
 
         #region weapon permissions
         public static readonly Dictionary<string, Permission> weaponPermissions = new()
-        {
+        { 
+            // vanilla weapons
             ["weapon_advancedrifle"] = Permission.WPAdvancedRifle,
             ["weapon_appistol"] = Permission.WPAPPistol,
             ["weapon_assaultrifle"] = Permission.WPAssaultRifle,
@@ -1027,6 +1040,56 @@ namespace vMenuClient.data
             ["COMPONENT_HEAVYSNIPER_VARMOD_XMAS23"] = GetLabelText("WCT_HVSP_XM"),
             // MP2024_01 DLC (V 3258)
             ["COMPONENT_STUNGUN_VARMOD_BAIL"] = GetLabelText("WCT_STNGN_BAIL"),
+            
+            // MPX Weapon Components
+            ["COMPONENT_MPX_CLIP_01"] = "Stock Magazine",
+            ["COMPONENT_MPX_CLIP_02"] = "41rnd Magazine",
+            ["COMPONENT_MPX_CLIP_03"] = "50rnd Stick Magazine",
+            ["COMPONENT_MPX_BARREL_01"] = "114mm Barrel",
+            ["COMPONENT_MPX_BARREL_02"] = "114mm ISBarrel",
+            ["COMPONENT_MPX_BARREL_03"] = "114mm SBarrel",
+            ["COMPONENT_MPX_BARREL_04"] = "165mm Barrel",
+            ["COMPONENT_MPX_BARREL_05"] = "165mm ISBarrel",
+            ["COMPONENT_MPX_BARREL_06"] = "165mm SBarrel",
+            ["COMPONENT_MPX_BARREL_07"] = "205mm Barrel",
+            ["COMPONENT_MPX_BARREL_08"] = "205mm SBarrel",
+            ["COMPONENT_MPX_BARREL_09"] = "265mm Barrel",
+            ["COMPONENT_MPX_BARREL_10"] = "265mm SBarrel",
+            ["COMPONENT_MPX_BARREL_11"] = "355mm Barrel",
+            ["COMPONENT_MPX_BARREL_12"] = "355mm SBarrel",
+            ["COMPONENT_MPX_HANDGUARD_01"] = "Handguard #1",
+            ["COMPONENT_MPX_HANDGUARD_02"] = "Handguard #2",
+            ["COMPONENT_MPX_HANDGUARD_03"] = "Handguard #3",
+            ["COMPONENT_MPX_HANDGUARD_04"] = "Handguard #4",
+            ["COMPONENT_MPX_HANDGUARD_05"] = "Handguard #5",
+            ["COMPONENT_MPX_HANDGUARD_06"] = "Handguard #6",
+            ["COMPONENT_MPX_STOCK_01"] = "Stock #1",
+            ["COMPONENT_MPX_STOCK_02"] = "Stock #2",
+            ["COMPONENT_MPX_STOCK_03"] = "Stock #3",
+            ["COMPONENT_MPX_STOCK_04"] = "Stock #4",
+            ["COMPONENT_MPX_STOCK_05"] = "Stock #5",
+            ["COMPONENT_MPX_STOCK_06"] = "Stock #6",
+            ["COMPONENT_MPX_STOCK_07"] = "Stock #7",
+            ["COMPONENT_MPX_STOCK_08"] = "Stock #8",
+            ["COMPONENT_MPX_STOCK_09"] = "Stock #9",
+            ["COMPONENT_MPX_STOCK_10"] = "Stock #10",
+            ["COMPONENT_MPX_FLSH_01"] = "Flashlight #1",
+            ["COMPONENT_MPX_FLSH_02"] = "Flashlight #2",
+            ["COMPONENT_MPX_FLSH_03"] = "Flashlight #3",
+            ["COMPONENT_MPX_FLSH_04"] = "Flashlight #4",
+            ["COMPONENT_MPX_FLSH_05"] = "Flashlight #5",
+            ["COMPONENT_MPX_FLSH_06"] = "Flashlight #6",
+            ["COMPONENT_MPX_FLSH_07"] = "Flashlight #7",
+            ["COMPONENT_MPX_FLSH_08"] = "Flashlight #8",
+            ["COMPONENT_MPX_SCOPE_01"] = "Ironsights",
+            ["COMPONENT_MPX_SCOPE_02"] = "Scope #1",
+            ["COMPONENT_MPX_SCOPE_03"] = "Scope #2",
+            ["COMPONENT_MPX_SCOPE_04"] = "Scope #3",
+            ["COMPONENT_MPX_SCOPE_05"] = "Scope #4",
+            ["COMPONENT_MPX_SCOPE_06"] = "Scope #5",
+            ["COMPONENT_MPX_SCOPE_07"] = "Scope #6",
+            ["COMPONENT_MPX_SCOPE_08"] = "Scope #7",
+            ["COMPONENT_MPX_SCOPE_09"] = "Scope #8",
         };
         #endregion
 
