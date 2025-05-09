@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -329,6 +329,8 @@ namespace vMenuShared
             WPHackingDevice,
             // MP2024_01 DLC (V 3258)
             WPStunRod,
+            // Custom Weapons
+            WPDeagle,
             #endregion
 
             // Weapon Loadouts Menu

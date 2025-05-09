@@ -17,6 +17,7 @@ namespace vMenuClient.data
         public Dictionary<string, uint> Components;
         public Permission Perm;
         public string SpawnName;
+        public uint Group; // weapon group/category value
         public readonly int GetMaxAmmo
         {
             get
@@ -73,6 +74,25 @@ namespace vMenuClient.data
             }
         }
 
+        // dictionary to hold custom weapons that should be directly in categories
+        private static readonly Dictionary<string, ValidWeapon> CustomWeapons = new();
+
+        // list of custom weapons we want to add directly to categories
+        static ValidWeapons()
+        {
+            // add desert eagle to custom weapons
+            var deagleHash = (uint)GetHashKey("weapon_deagle");
+            CustomWeapons["weapon_deagle"] = new ValidWeapon
+            {
+                Hash = deagleHash,
+                Name = "Desert Eagle",
+                SpawnName = "weapon_deagle",
+                Perm = Permission.WPDeagle,
+                // desert eagle is a pistol
+                Group = 416676503 // pistol/handgun category value
+            };
+        }
+
         private static Dictionary<string, string> _components = new();
         public static Dictionary<string, string> GetWeaponComponents()
         {
@@ -103,6 +123,8 @@ namespace vMenuClient.data
         private static void CreateWeaponsList()
         {
             _weaponsList.Clear();
+            
+            // add standard weapons from the game
             foreach (var weapon in weaponNames)
             {
                 var realName = weapon.Key;
@@ -130,13 +152,45 @@ namespace vMenuClient.data
                     SpawnName = realName,
                     Name = localizedName,
                     Components = componentHashes,
-                    Perm = weaponPermissions[realName]
+                    Perm = weaponPermissions[realName],
+                    Group = (uint)GetWeapontypeGroup(hash) // get the weapon group/category
                 };
                 if (!_weaponsList.Contains(vw))
                 {
                     _weaponsList.Add(vw);
                 }
             }
+            
+            // add custom weapons directly to the main list
+            foreach (var customWeapon in CustomWeapons.Values)
+            {
+                // get components for the custom weapon
+                var componentHashes = new Dictionary<string, uint>();
+                var weaponComponents = GetWeaponComponents();
+                var weaponComponentKeys = weaponComponents.Keys;
+                foreach (var comp in weaponComponentKeys)
+                {
+                    var componentHash = (uint)GetHashKey(comp);
+                    if (DoesWeaponTakeWeaponComponent(customWeapon.Hash, componentHash))
+                    {
+                        var componentName = weaponComponents[comp];
+                        if (!componentHashes.ContainsKey(componentName))
+                        {
+                            componentHashes[componentName] = componentHash;
+                        }
+                    }
+                }
+                
+                var vw = customWeapon;
+                vw.Components = componentHashes;
+                
+                if (!_weaponsList.Contains(vw))
+                {
+                    // add this custom weapon directly to the main weapons list
+                    _weaponsList.Add(vw);
+                }
+            }
+            
             _weaponsList.Sort((x, y) => string.Compare(x.Name, y.Name));
         }
 
@@ -452,6 +506,7 @@ namespace vMenuClient.data
             ["weapon_pistol"] = Permission.WPPistol,
             ["weapon_pistol50"] = Permission.WPPistol50,
             ["weapon_pistol_mk2"] = Permission.WPPistolMk2,
+            ["weapon_deagle"] = Permission.WPDeagle, // using its own custom permission
             ["weapon_poolcue"] = Permission.WPPoolCue,
             ["weapon_proxmine"] = Permission.WPProximityMine,
             ["weapon_pumpshotgun"] = Permission.WPPumpShotgun,
@@ -515,6 +570,7 @@ namespace vMenuClient.data
         #region weapon component names
         private static readonly Dictionary<string, string> weaponComponentNames = new()
         {
+            ["COMPONENT_DEAGLE_CLIP_01"] = GetLabelText("WCT_CLIP1"),
             ["COMPONENT_ADVANCEDRIFLE_CLIP_01"] = GetLabelText("WCT_CLIP1"),
             ["COMPONENT_ADVANCEDRIFLE_CLIP_02"] = GetLabelText("WCT_CLIP2"),
             ["COMPONENT_ADVANCEDRIFLE_VARMOD_LUXE"] = GetLabelText("WCT_VAR_METAL"),
