@@ -1177,111 +1177,33 @@ namespace vMenuClient
 
         #region Join / Quit notifications (via events)
         /// <summary>
-        /// Runs join/quit notification checks.
+        /// Runs join/quit notification checks
         /// </summary>
         /// <returns></returns>
         [EventHandler("vMenu:PlayerJoinQuit")]
         internal void OnJoinQuitNotification(string playerName, string dropReason)
         {
-            if (MainMenu.PermissionsSetupComplete && MainMenu.MiscSettingsMenu != null)
-            {
-                // Join/Quit notifications
-                if (MainMenu.MiscSettingsMenu.JoinQuitNotifications && IsAllowed(Permission.MSJoinQuitNotifs))
-                {
-                    if (dropReason == null)
-                    {
-                        Notify.Custom($"~g~<C>{GetSafePlayerName(playerName)}</C>~s~ joined the server.");
-                    }
-                    else
-                    {
-                        Notify.Custom($"~r~<C>{GetSafePlayerName(playerName)}</C>~s~ left the server. ~c~({GetSafePlayerName(dropReason)})");
-                    }
-                }
-            }
+            // notifications disabled as requested
         }
         #endregion
 
         #region Death Notifications
         /// <summary>
-        /// Runs death notification checks.
+        /// Runs death notification checks (notifications disabled).
         /// </summary>
         /// <returns></returns>
         private async Task DeathNotifications()
         {
-            // Death notifications
+            // Death notifications tracking (notifications disabled as requested)
             if (MainMenu.MiscSettingsMenu.DeathNotifications)
             {
                 var pl = Players;
-                var tmpiterator = 0;
                 foreach (var p in pl)
                 {
-                    tmpiterator++;
                     if (p.IsDead)
                     {
                         if (deadPlayers.Contains(p.Handle)) { return; }
-                        var killer = p.Character.GetKiller();
-                        if (killer != null)
-                        {
-                            if (killer.Handle != p.Character.Handle)
-                            {
-                                if (killer.Exists())
-                                {
-                                    if (killer.Model.IsPed)
-                                    {
-                                        var found = false;
-                                        foreach (var playerKiller in pl)
-                                        {
-                                            if (playerKiller.Character.Handle == killer.Handle)
-                                            {
-                                                Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered by ~y~<C>{GetSafePlayerName(playerKiller.Name)}</C>~s~.");
-                                                found = true;
-                                                break;
-                                            }
-                                        }
-                                        if (!found)
-                                        {
-                                            Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered.");
-                                        }
-                                    }
-                                    else if (killer.Model.IsVehicle)
-                                    {
-                                        var found = false;
-                                        foreach (var playerKiller in pl)
-                                        {
-                                            if (playerKiller.Character.IsInVehicle())
-                                            {
-                                                if (playerKiller.Character.CurrentVehicle.Handle == killer.Handle)
-                                                {
-                                                    Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered by ~y~<C>{GetSafePlayerName(playerKiller.Name)}</C>~s~.");
-                                                    found = true;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        if (!found)
-                                        {
-                                            Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered.");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered.");
-                                    }
-                                }
-                                else
-                                {
-                                    Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered.");
-                                }
-                            }
-                            else
-                            {
-                                Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~committed suicide.");
-                            }
-                        }
-                        else
-                        {
-                            Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~died.");
-                        }
+                        // just track dead players without notifications
                         deadPlayers.Add(p.Handle);
                     }
                     else
