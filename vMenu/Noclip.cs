@@ -38,7 +38,7 @@ namespace vMenuClient
         {
             if (!clockedIn && NoclipActive)
             {
-                SetNoclipActive(false);
+                SetNoclipActive(false, true); // force disable
             }
         }
 
@@ -58,7 +58,7 @@ namespace vMenuClient
             return false;
         }
 
-        internal static void SetNoclipActive(bool active)
+        internal static void SetNoclipActive(bool active, bool force = false)
         {
             if (_instance == null)
             {
@@ -67,7 +67,8 @@ namespace vMenuClient
 
             bool isStaff = _instance.CheckIsStaff();
 
-            if (!isStaff)
+            // Only allow enabling if staff, but always allow disabling if forced
+            if (!isStaff && active && !force)
             {
                 return;
             }
