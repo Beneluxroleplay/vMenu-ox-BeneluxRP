@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using CitizenFX.Core;
-
 using static CitizenFX.Core.Native.API;
-
 using static vMenuShared.ConfigManager;
 using static vMenuClient.CommonFunctions;
 
@@ -17,7 +14,6 @@ namespace vMenuClient
         private static int MovingSpeed { get; set; } = 0;
         private static int Scale = -1;
         private static bool FollowCamMode { get; set; } = true;
-
 
         private readonly List<string> speeds = new()
         {
@@ -33,13 +29,45 @@ namespace vMenuClient
 
         public NoClip()
         {
+            _instance = this;
             Tick += NoClipHandler;
+            EventHandlers["bxrp_online:staff:clockin"] += new Action<bool>(OnStaffClockStatusChanged);
+        }
+
+        private void OnStaffClockStatusChanged(bool clockedIn)
+        {
+            if (!clockedIn && NoclipActive)
+            {
+                SetNoclipActive(false);
+            }
+        }
+
+        private static NoClip _instance;
+
+        private bool CheckIsStaff()
+        {
+            try
+            {
+                if (GetResourceState("bxrp_online") == "started")
+                {
+                    dynamic result = Exports["bxrp_online"].IsStaff();
+                    return result is bool staffStatus && staffStatus;
+                }
+            }
+            catch { }
+            return false;
         }
 
         internal static void SetNoclipActive(bool active)
         {
+            if (_instance == null)
+            {
+                return;
+            }
 
-            if (!CanDoInteraction("noclip"))
+            bool isStaff = _instance.CheckIsStaff();
+
+            if (!isStaff)
             {
                 return;
             }
@@ -50,14 +78,11 @@ namespace vMenuClient
                 ["enabled"] = NoclipActive
             };
             TriggerEvent("vMenu:Integrations:Action", "noclip", actionData);
-            
-            // trigger gang tags visibility toggle when noclip state changes
             TriggerServerEvent("bxrp_gangtags:server:noclip");
 
             if (!active)
             {
                 SetScaleformMovieAsNoLongerNeeded(ref Scale);
-
                 Scale = -1;
             }
         }
@@ -66,6 +91,7 @@ namespace vMenuClient
         {
             return NoclipActive;
         }
+
         static string JOAAT(string command)
         {
             uint hash = 0;
@@ -95,6 +121,7 @@ namespace vMenuClient
 
             return hash.ToString("X");
         }
+
         private async Task NoClipHandler()
         {
             if (NoclipActive)
@@ -253,20 +280,17 @@ namespace vMenuClient
                 SetEveryoneIgnorePlayer(Game.PlayerPed.Handle, true);
                 SetPoliceIgnorePlayer(Game.PlayerPed.Handle, true);
 
-                // After the next game tick, reset the entity properties.
                 await Delay(0);
                 FreezeEntityPosition(noclipEntity, false);
                 SetEntityInvincible(noclipEntity, false);
                 SetEntityCollision(noclipEntity, true, true);
 
-                // If the player is not set as invisible by PlayerOptions or if the noclip entity is not the player ped, reset the visibility
                 if (MainMenu.PlayerOptionsMenu == null || !MainMenu.PlayerOptionsMenu.PlayerInvisible || (MainMenu.PlayerOptionsMenu.PlayerInvisible && noclipEntity == Game.PlayerPed.Handle))
                 {
                     SetEntityVisible(noclipEntity, true, false);
                     SetLocalPlayerVisibleLocally(true);
                 }
 
-                // Always reset the alpha.
                 ResetEntityAlpha(noclipEntity);
 
                 SetEveryoneIgnorePlayer(Game.PlayerPed.Handle, false);
