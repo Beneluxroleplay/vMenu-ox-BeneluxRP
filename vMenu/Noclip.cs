@@ -31,7 +31,7 @@ namespace vMenuClient
         {
             _instance = this;
             Tick += NoClipHandler;
-            EventHandlers["bxrp_online:staff:clockin"] += new Action<bool>(OnStaffClockStatusChanged);
+            EventHandlers["bxrp_core:staff:clockin"] += new Action<bool>(OnStaffClockStatusChanged);
         }
 
         private void OnStaffClockStatusChanged(bool clockedIn)
@@ -48,9 +48,9 @@ namespace vMenuClient
         {
             try
             {
-                if (GetResourceState("bxrp_online") == "started")
+                if (GetResourceState("bxrp_core") == "started")
                 {
-                    dynamic result = Exports["bxrp_online"].IsStaff();
+                    dynamic result = Exports["bxrp_core"].IsStaff();
                     return result is bool staffStatus && staffStatus;
                 }
             }
