@@ -651,6 +651,8 @@ namespace vMenuClient.menus
                     nightVision.Checked = nvEnabled;
                     SetNightvision(nvEnabled);
 
+                    TriggerEvent("BeneluxRP:ThermalNVG", 1, nvEnabled);
+
                 }), false);
             }
             if (IsAllowed(Permission.MSThermalVision))
@@ -668,6 +670,8 @@ namespace vMenuClient.menus
                     tvEnabled = !tvEnabled;
                     thermalVision.Checked = tvEnabled;
                     SetSeethrough(tvEnabled);
+
+                    TriggerEvent("BeneluxRP:ThermalNVG", 2, tvEnabled);
 
                 }), false);
             }
@@ -781,6 +785,8 @@ namespace vMenuClient.menus
                         return;
                     }
                     SetNightvision(_checked);
+
+                    TriggerEvent("BeneluxRP:ThermalNVG", 1, _checked);
                 }
                 else if (item == thermalVision)
                 {
@@ -791,6 +797,8 @@ namespace vMenuClient.menus
                         return;
                     }
                     SetSeethrough(_checked);
+
+                    TriggerEvent("BeneluxRP:ThermalNVG", 2, _checked);
                 }
                 else if (item == lockCamX)
                 {
